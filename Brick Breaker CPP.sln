@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36717.8 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Brick Breaker CPP", "Brick Breaker CPP.vcxproj", "{B06D2B06-8EB5-4D2E-B7B4-53E91F9744D2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B06D2B06-8EB5-4D2E-B7B4-53E91F9744D2}.Debug|x64.ActiveCfg = Debug|x64
+		{B06D2B06-8EB5-4D2E-B7B4-53E91F9744D2}.Debug|x64.Build.0 = Debug|x64
+		{B06D2B06-8EB5-4D2E-B7B4-53E91F9744D2}.Debug|x86.ActiveCfg = Debug|Win32
+		{B06D2B06-8EB5-4D2E-B7B4-53E91F9744D2}.Debug|x86.Build.0 = Debug|Win32
+		{B06D2B06-8EB5-4D2E-B7B4-53E91F9744D2}.Release|x64.ActiveCfg = Release|x64
+		{B06D2B06-8EB5-4D2E-B7B4-53E91F9744D2}.Release|x64.Build.0 = Release|x64
+		{B06D2B06-8EB5-4D2E-B7B4-53E91F9744D2}.Release|x86.ActiveCfg = Release|Win32
+		{B06D2B06-8EB5-4D2E-B7B4-53E91F9744D2}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B2B4BC7F-E1A1-4FDF-A48A-FCA47A58ACEE}
+	EndGlobalSection
+EndGlobal
