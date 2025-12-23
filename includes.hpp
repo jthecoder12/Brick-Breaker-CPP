@@ -3,8 +3,10 @@
 #include <SDL3/SDL.h>
 #include <string>
 #include <memory>
+#include <vector>
 
 #define WHITE {255, 255, 255, 255}
+#define GRAY {200, 200, 200, 255}
 
 using namespace std;
 
@@ -14,10 +16,12 @@ static SDL_Renderer* renderer = nullptr;
 static bool isRunning = true;
 
 class Entity {
-protected:
 	SDL_FRect rect = { };
 
 public:
+	bool rendering = true;
+	bool ignore = false;
+
 	Entity(float x, float y, float w, float h) {
 		rect.x = x;
 		rect.y = y;
@@ -42,12 +46,14 @@ public:
 		return !(rect.x + rect.w < other.rect.x ||
 			rect.x > other.rect.x + other.rect.w ||
 			rect.y + rect.h < other.rect.y ||
-			rect.y > other.rect.y + other.rect.h);
+			rect.y > other.rect.y + other.rect.h) && !ignore;
 	}
 
-	void render(SDL_Renderer* renderer, SDL_Color color) {
-		SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-		SDL_RenderFillRect(renderer, &rect);
+	void render(SDL_Color color) {
+		if (rendering) {
+			SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+			SDL_RenderFillRect(renderer, &rect);
+		}
 	}
 };
 

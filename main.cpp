@@ -14,6 +14,8 @@ float ballSpeed = 0.5;
 bool hDirection = false;
 bool vDirection = false;
 
+vector<vector<Entity>> bricks;
+
 Uint64 now = SDL_GetPerformanceCounter();
 Uint64 last = 0;
 float deltaTime = 0;
@@ -67,8 +69,21 @@ void mainLoop() {
 
 	SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);
 	SDL_RenderClear(renderer);
-	paddle.render(renderer, WHITE);
-	ball.render(renderer, WHITE);
+	paddle.render(WHITE);
+	ball.render(WHITE);
+	for (int i = 0; i < 10; i++)
+		for (int j = 0; j < 3; j++) {
+			if (j % 2 == 0) bricks[j][i].render(i % 2 == 0 ? SDL_Color(WHITE) : SDL_Color(GRAY));
+			else bricks[j][i].render(i % 2 == 0 ? SDL_Color(GRAY) : SDL_Color(WHITE));
+
+			if (bricks[j][i].checkCollision(ball)) {
+				bricks[j][i].rendering = false;
+				bricks[j][i].ignore = true;
+				vDirection = !vDirection;
+				beep->play();
+			}
+		}
+
 	SDL_RenderPresent(renderer);
 }
 
@@ -85,6 +100,13 @@ int main() {
 	SDL_SetRenderLogicalPresentation(renderer, 1280, 720, SDL_LOGICAL_PRESENTATION_LETTERBOX);
 
 	beep = make_unique<WAV>("beep.wav");
+
+	vector<Entity> row1, row2, row3;
+	bricks.push_back(row1);
+	bricks.push_back(row2);
+	bricks.push_back(row3);
+
+	for (int i = 0; i < 10; i++) for (int j = 0; j < 3; j++) bricks[j].push_back(Entity(i * 128, j * 36, 128, 36));
 
 #ifdef __EMSCRIPTEN__
 	emscripten_set_main_loop(mainLoop, 0, 1);
