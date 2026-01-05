@@ -1,0 +1,80 @@
+name: Game binaries
+
+on: [push]
+
+jobs:
+  build-windows-x64:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          install: >-
+            mingw-w64-ucrt-x86_64-gcc
+            mingw-w64-ucrt-x86_64-sdl3
+      - name: Compile for Windows
+        shell: msys2 {0}
+        run: |
+          mkdir build
+          g++ main.cpp -lSDL3 -o build/BrickBreaker.exe
+          mv beep.wav build
+      - name: Upload Windows build
+        uses: actions/upload-artifact@v4
+        with:
+          name: Windows x64
+          path: build/
+  build-linux-x64:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: libsdl-org/setup-sdl@v1
+        with:
+          version: '3-latest'
+      - name: Compile for Linux
+        run: |
+          mkdir build
+          g++ main.cpp -lSDL3 -o build/BrickBreaker.x86_64
+          mv beep.wav build
+      - name: Upload Linux build
+        uses: actions/upload-artifact@v4
+        with:
+          name: Linux x64
+          path: build/
+  build-macos-aarch64:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: libsdl-org/setup-sdl@v1
+        with:
+          version: '3-latest'
+      - name: Compile for macOS aarch64
+        run: |
+          mkdir build
+          g++ main.cpp -lSDL3 -o build/BrickBreaker
+          mv beep.wav build
+      - name: Upload macOS aarch64 build
+        uses: actions/upload-artifact@v4
+        with:
+          name: macOS aarch64
+          path: build/
+  build-macos-x86_64:
+    runs-on: macos-15-intel
+    steps:
+      - uses: actions/checkout@v4
+      - uses: libsdl-org/setup-sdl@v1
+        with:
+          version: '3-latest'
+      - name: Compile for macOS x86_64
+        run: |
+          mkdir build
+          g++ main.cpp -lSDL3 -o build/BrickBreaker
+          mv beep.wav build
+      - name: Upload macOS x86_64 build
+        uses: actions/upload-artifact@v4
+        with:
+          name: macOS x86_64
+          path: build/
+        
