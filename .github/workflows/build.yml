@@ -30,20 +30,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install SDL3-Dev
-        run: |
-          curl -L -o sdl3.tar.gz https://github.com/libsdl-org/SDL/archive/refs/tags/release-3.4.0.tar.gz
-          tar -xvf sdl3.tar.gz
-          cd SDL-release-3.4.0
-          mkdir build
-          cd build
-          cmake ..
-          cmake --build . --config Release --parallel
-          sudo cmake --install . --config Release
+      - name: Install SDL3
+        uses: libsdl-org/setup-sdl@v1
+        with:
+          version: '3-latest'
       - name: Compile for Linux
         run: |
           mkdir build
-          g++ main.cpp -I . -I /usr/local/include /usr/local/lib/libSDL3.so -o build/BrickBreaker.x86_64
+          g++ main.cpp -o build/BrickBreaker.x86_64 `pkg-config --cflags --libs sdl3`
           mv beep.wav build
       - name: Upload Linux build
         uses: actions/upload-artifact@v4
@@ -80,6 +74,6 @@ jobs:
       - name: Upload macOS x86_64 build
         uses: actions/upload-artifact@v4
         with:
-          name: macOS aarch64
+          name: macOS x86_64
           path: build/
         
